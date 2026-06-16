@@ -25,7 +25,13 @@ public class PowerEvent {
             UseAnim useAnim = event.getItem().getUseAnimation();;
             if (BookTool.isHasBookItem(player, InitItems.Bone_Head.asItem())) {
                 if (useAnim == UseAnim.EAT) {
-                    event.setDuration((int) (event.getDuration() * 0.9f));
+                    //10
+                    float value = BookTool.getConfigValue(CIModifyBookEvent.AllBookConfig.bone_head);
+                    //0.1f
+                    value /= 100f;
+                    //0.9f
+                    float neoValue = 1 - value;
+                    event.setDuration((int) (event.getDuration() * neoValue));
                 }
             }
         }
@@ -50,7 +56,38 @@ public class PowerEvent {
 
                     ));
                 }
+                if (BookTool.isHasBookItem(player,InitItems.God_blood.asItem())) {
+                    BookTool.addAttribute(multimap, List.of(
 
+                            new BookTool.CIAttribute(Attributes.MOVEMENT_SPEED, "god_blood_speed",
+                                    BookTool.getConfigValue(CIModifyBookEvent.AllBookConfig.god_blood_speed),
+                                    BookTool.CIOperation.baseValue),
+
+                            new BookTool.CIAttribute(Attributes.ATTACK_SPEED, "god_blood_attackspeed",
+                                    BookTool.getConfigValue(CIModifyBookEvent.AllBookConfig.god_blood_attackspeed),
+                                    BookTool.CIOperation.baseValue)
+
+
+                    ));
+                }
+                if (BookTool.isHasBookItem(player,InitItems.Stronger_Stone.asItem())) {
+                    BookTool.addAttribute(multimap, List.of(
+
+                            new BookTool.CIAttribute(Attributes.ATTACK_DAMAGE, "stronger_stone_damage",
+                                    BookTool.getConfigValue(CIModifyBookEvent.AllBookConfig.stronger_stone_damage),
+                                    BookTool.CIOperation.baseValue)
+
+                    ));
+                }
+                if (BookTool.isHasBookItem(player,InitItems.Ring_.asItem())) {
+                    BookTool.addAttribute(multimap, List.of(
+
+                            new BookTool.CIAttribute(AttReg.fortune, "ring_fortune",
+                                    BookTool.getConfigValue(CIModifyBookEvent.AllBookConfig.ring_fortune),
+                                    BookTool.CIOperation.addValue)
+
+                    ));
+                }
                 AttributeMap modifiers = player.getAttributes();
                 modifiers.addTransientAttributeModifiers(multimap);
             }
