@@ -9,7 +9,7 @@
   "chest_useful_book.configuration.bone_head": "无厌之骸骨",
   "chest_useful_book.configuration.heart": "仿生心脏",
   "chest_useful_book.configuration.heart2": "仿生心脏2",
-  "chest_useful_book.modify.book.bone_head": "+10.0%进食速度",
-  "chest_useful_book.modify.book.heart": "+4.0%治疗",
-  "chest_useful_book.modify.book.heart2": "+2.0%最大生命值"
+  "chest_useful_book.modify.book.bone_head": "+%d%%进食速度",
+  "chest_useful_book.modify.book.heart": "+%d%%治疗",
+  "chest_useful_book.modify.book.heart2": "+%d最大生命值"
 }

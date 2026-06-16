@@ -6,9 +6,9 @@ license="${mod_license}"
 modId="${mod_id}"
 version="${mod_version}" #mandatory
 displayName="${mod_name}" #mandatory
-
+authors="ytgld" #optional
 description='''
-Example mod description.
+.
 '''
 
 [[mixins]]
@@ -20,6 +20,14 @@ config="${mod_id}.mixins.json"
     versionRange="[${neo_version},)" #mandatory
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.${mod_id}]] #optional
+    modId="chest_item" #mandatory
+    type="required" #mandatory
+    versionRange="[1.21.1-1.2.2.8,)" #mandatory
+    ordering="NONE"
+    side="BOTH"
+
 
 # Here's another dependency
 [[dependencies.${mod_id}]]

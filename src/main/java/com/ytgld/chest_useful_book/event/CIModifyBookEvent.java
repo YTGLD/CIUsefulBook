@@ -1,16 +1,12 @@
 package com.ytgld.chest_useful_book.event;
 
-import com.ytgld.chest_item.config.ConfigPluginFinder;
-import com.ytgld.chest_item.config.RegisterItemConfig;
 import com.ytgld.chest_item.items.InitItems;
-import com.ytgld.chest_item.items.ItemBase;
 import com.ytgld.chest_useful_book.CIUsefulBook;
 import com.ytgld.chest_useful_book.config.BookConfigPlugin;
 import com.ytgld.chest_useful_book.config.BookConfigPluginFinder;
 import com.ytgld.chest_useful_book.config.BookRegisterItemConfig;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -28,20 +24,31 @@ public class CIModifyBookEvent {
      */
     public static List<Component> doModifyText(Item itemTarget,List<Component> modifyText){
         List<Component> components = new ArrayList<>(modifyText);
-        components.addAll(BookTool.addText(itemTarget,InitItems.Bone_Head.asItem(), "bone_head"));
-        components.addAll(BookTool.addText(itemTarget,InitItems.Heart_.asItem(), "heart","heart2"));
+
+        components.addAll(BookTool.addText(itemTarget,InitItems.Bone_Head.asItem(),
+                new BookTool.StringAndValue("bone_head", BookTool.getConfigValue(AllBookConfig.bone_head))));
+
+        components.addAll(BookTool.addText(itemTarget,InitItems.Heart_.asItem(),
+                new BookTool.StringAndValue("heart",BookTool.getConfigValue(AllBookConfig.heart)),
+                new BookTool.StringAndValue("heart2",BookTool.getConfigValue(AllBookConfig.heart2))));
+
         return components;
     }
     @BookConfigPlugin
     public static class AllBookConfig implements BookRegisterItemConfig {
 
         public void config(ModConfigSpec.Builder builder) {
+            builder.push("bone_head");
             bone_head = BookTool.setModConfigSpec(builder,
-                    "bone_head",10,0,Integer.MAX_VALUE);
+                    "bone_head",10,0,100);
+            builder.pop();
+
+            builder.push("heart");
             heart = BookTool.setModConfigSpec(builder,
-                    "heart",4,0,Integer.MAX_VALUE);
+                    "heart",4,0,100);
             heart2 = BookTool.setModConfigSpec(builder,
-                    "heart2",2,0,Integer.MAX_VALUE);
+                    "heart2",2,0,100);
+            builder.pop();
 
         }
         public List<CIBookString> theLanguageProvider() {
@@ -63,7 +70,12 @@ public class CIModifyBookEvent {
     public static class CIUsefulBookText extends LanguageProvider{
        public static String eat = "进食速度";
        public static String heal = "治疗";
-       public static String maxHealth = "最大生命值";
+        public static String maxHealth = "最大生命值";
+        public static String speed = "移动速度";
+        public static String digger = "挖掘速度";
+        public static String luck = "幸运值";
+        public static String looting = "抢夺";
+        public static String future = "时运";
 
         public CIUsefulBookText(PackOutput output) {
             super(output, CIUsefulBook.MODID, "chest_useful_book_test_lang");
@@ -77,13 +89,13 @@ public class CIModifyBookEvent {
                 }
             }
             addCI("bone_head",BookTool.addNumberString(true,true,
-                    10, eat));
+                    eat));
 
             addCI("heart",BookTool.addNumberString(true,true,
-                    4, heal));
+                    heal));
 
-            addCI("heart2",BookTool.addNumberString(true,true,
-                    2, maxHealth));
+            addCI("heart2",BookTool.addNumberString(true,false,
+                    maxHealth));
         }
         public void addCI(String string ,String path){
             this.add("chest_useful_book.modify.book." + string, path);

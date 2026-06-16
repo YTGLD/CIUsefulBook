@@ -22,24 +22,32 @@ import java.util.Set;
 public class BookTool {
     public static ModConfigSpec.DoubleValue  setModConfigSpec(ModConfigSpec.Builder builder,
                                                     String pathName, double valueDef, double valueMin, double valueMax){
-        return builder.translation("chest_item.config."+ pathName)
+        if (valueDef < valueMin) {
+            valueDef = valueMin;
+        }
+        if (valueDef > valueMax) {
+            valueDef =valueMax;
+        }
+        return builder.translation("chest_useful_book.config."+ pathName)
                 .defineInRange(pathName,valueDef,valueMin,valueMax);
     }
 
-    public static String addNumberString(boolean increase,boolean percentage,float value , String path){
+    public static String addNumberString(boolean increase, boolean percentage, String path){
+        String percentageValue = "%d%%";
+        String notPercentageValue = "%d";
         if (increase) {
             String add = "+";
             if (percentage) {
-                return add + String.valueOf(value) + "%" + path;
+                return add + percentageValue + path;
             }else {
-                return add + String.valueOf(value) + path;
+                return add + notPercentageValue + path;
             }
         }else {
             String down = "-";
             if (percentage) {
-                return down + String.valueOf(value) + "%" + path;
+                return down + percentageValue + path;
             }else {
-                return down + String.valueOf(value) + path;
+                return down + notPercentageValue + path;
             }
         }
     }
@@ -48,26 +56,27 @@ public class BookTool {
         return itemTarget == item;
     }
 
-    public static List<Component> addText(Item item, Item target, String...  name){
+    public static List<Component> addText(Item item, Item target, StringAndValue...  name){
         List<Component> modifyText = new ArrayList<>();
         if (!isTarget(item,target)){
             return modifyText;
         }
         if (target instanceof ItemBase itemBase) {
-            addText(modifyText,itemBase.color(itemBase.getDefaultInstance()));
+            addText(modifyText,itemBase.color(itemBase.getDefaultInstance()),name);
         }else {
-            addText(modifyText,0xffffffff);
+            addText(modifyText,0xffffffff,name);
         }
         return modifyText;
     }
+    public record StringAndValue(String string , float value){}
 
-    public static void addText(List<Component> modifyText,int color, String...  name){
+    public static void addText(List<Component> modifyText,int color, StringAndValue...  name){
         modifyText.add(Component.literal(""));
         modifyText.add(Component.translatable("chest_useful_book.modify.book").withStyle(Style.EMPTY
                 .withColor(color)));
-        for (String string : name){
-            String path = "chest_useful_book.modify.book." + string;
-            modifyText.add(Component.translatable(path).withStyle(Style.EMPTY
+        for (StringAndValue string : name){
+            String path = "chest_useful_book.modify.book." + string.string();
+            modifyText.add(Component.translatable(path,string.value()).withStyle(Style.EMPTY
                     .withColor(color)));
         }
     }
