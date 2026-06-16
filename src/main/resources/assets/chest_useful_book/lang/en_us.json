@@ -1,0 +1,15 @@
+{
+  "chest_useful_book.modify.book": "完成这个目标时，永久获得：",
+
+
+
+  "chest_useful_book.config.bone_head": "进食速度",
+  "chest_useful_book.config.heart": "治疗",
+  "chest_useful_book.config.heart2": "最大生命值",
+  "chest_useful_book.configuration.bone_head": "无厌之骸骨",
+  "chest_useful_book.configuration.heart": "仿生心脏",
+  "chest_useful_book.configuration.heart2": "仿生心脏2",
+  "chest_useful_book.modify.book.bone_head": "+10.0%进食速度",
+  "chest_useful_book.modify.book.heart": "+4.0%治疗",
+  "chest_useful_book.modify.book.heart2": "+2.0%最大生命值"
+}
