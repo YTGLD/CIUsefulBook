@@ -88,6 +88,41 @@ public class PowerEvent {
 
                     ));
                 }
+                if (BookTool.isHasBookItem(player,InitItems.Armor_Stone.asItem())) {
+                    BookTool.addAttribute(multimap, List.of(
+
+                            new BookTool.CIAttribute(AttReg.resistance, "armor_stone_resistance",
+                                    BookTool.getConfigValue(CIModifyBookEvent.AllBookConfig.armor_stone_resistance),
+                                    BookTool.CIOperation.baseValue)
+
+                    ));
+                }
+                if (BookTool.isHasBookItem(player,InitItems.Life_Stone.asItem())) {
+                    BookTool.addAttribute(multimap, List.of(
+                            new BookTool.CIAttribute(AttReg.heal, "life_stone_heal",
+                                    BookTool.getConfigValue(CIModifyBookEvent.AllBookConfig.life_stone_heal),
+                                    BookTool.CIOperation.baseValue)
+                    ));
+                }
+                if (BookTool.isHasBookItem(player,InitItems.ImitationBiomass_.asItem())) {
+                    BookTool.addAttribute(multimap, List.of(
+                            new BookTool.CIAttribute(AttReg.heal,
+                                    "imitation_biomass_heal",
+                                    BookTool.getConfigValue(CIModifyBookEvent.AllBookConfig.imitation_biomass_heal),
+                                    BookTool.CIOperation.baseValue),
+
+                            new BookTool.CIAttribute(AttReg.resistance,
+                                    "imitation_biomass_resistance",
+                                    BookTool.getConfigValue(CIModifyBookEvent.AllBookConfig.imitation_biomass_resistance),
+                                    BookTool.CIOperation.baseValue),
+
+                            new BookTool.CIAttribute(Attributes.ATTACK_DAMAGE,
+                                    "imitation_biomass_damage",
+                                    BookTool.getConfigValue(CIModifyBookEvent.AllBookConfig.imitation_biomass_damage),
+                                    BookTool.CIOperation.baseValue)
+
+                    ));
+                }
                 AttributeMap modifiers = player.getAttributes();
                 modifiers.addTransientAttributeModifiers(multimap);
             }

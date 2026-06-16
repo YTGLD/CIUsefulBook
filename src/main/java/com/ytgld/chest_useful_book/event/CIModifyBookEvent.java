@@ -42,6 +42,19 @@ public class CIModifyBookEvent {
         components.addAll(BookTool.addText(itemTarget,InitItems.Ring_.asItem(),
                 new BookTool.StringAndValue("ring_fortune",BookTool.getConfigValue(AllBookConfig.ring_fortune))));
 
+        components.addAll(BookTool.addText(itemTarget,InitItems.Armor_Stone.asItem(),
+                new BookTool.StringAndValue("armor_stone_resistance",BookTool.getConfigValue(AllBookConfig.armor_stone_resistance))));
+
+        components.addAll(BookTool.addText(itemTarget,InitItems.Life_Stone.asItem(),
+                new BookTool.StringAndValue("life_stone_heal",BookTool.getConfigValue(AllBookConfig.life_stone_heal))));
+
+        components.addAll(BookTool.addText(itemTarget,InitItems.ImitationBiomass_.asItem(),
+                new BookTool.StringAndValue("imitation_biomass_heal",BookTool.getConfigValue(AllBookConfig.imitation_biomass_heal)),
+                new BookTool.StringAndValue("imitation_biomass_resistance",BookTool.getConfigValue(AllBookConfig.imitation_biomass_resistance)),
+                new BookTool.StringAndValue("imitation_biomass_damage",BookTool.getConfigValue(AllBookConfig.imitation_biomass_damage))
+
+        ));
+
         return components;
     }
     @BookConfigPlugin
@@ -82,6 +95,28 @@ public class CIModifyBookEvent {
                         "ring_fortune", 1, 0, 100);
                 builder.pop();
             }
+            {
+                builder.push("armor_stone");
+                armor_stone_resistance = BookTool.setModConfigSpec(builder,
+                        "armor_stone_resistance", 3, 0, 100);
+                builder.pop();
+            }
+            {
+                builder.push("life_stone");
+                life_stone_heal = BookTool.setModConfigSpec(builder,
+                        "life_stone_heal", 10, 0, 100);
+                builder.pop();
+            }
+            {
+                builder.push("imitation_biomass");
+                imitation_biomass_heal = BookTool.setModConfigSpec(builder,
+                        "imitation_biomass_heal", 5, 0, 100);
+                imitation_biomass_resistance = BookTool.setModConfigSpec(builder,
+                        "imitation_biomass_resistance", 1, 0, 100);
+                imitation_biomass_damage = BookTool.setModConfigSpec(builder,
+                        "imitation_biomass_damage", 2.5, 0, 100);
+                builder.pop();
+            }
         }
         public List<CIBookString> theLanguageProvider() {
             return List.of(
@@ -93,6 +128,17 @@ public class CIModifyBookEvent {
 
                     new CIBookString("ring", "矿工戒指", ""),
                     new CIBookString("ring_fortune", "矿工戒指", CIUsefulBookText.future),
+
+                    new CIBookString("armor_stone", "黄金护卫", ""),
+                    new CIBookString("armor_stone_resistance", "黄金护卫", CIUsefulBookText.resistance),
+
+                    new CIBookString("life_stone", "黄金生命", ""),
+                    new CIBookString("life_stone_heal", "黄金生命", CIUsefulBookText.heal),
+
+                    new CIBookString("imitation_biomass", "仿生物质", ""),
+                    new CIBookString("imitation_biomass_heal", "仿生物质1", CIUsefulBookText.heal),
+                    new CIBookString("imitation_biomass_resistance", "仿生物质2", CIUsefulBookText.resistance),
+                    new CIBookString("imitation_biomass_damage", "仿生物质3", CIUsefulBookText.damage),
 
                     new CIBookString("god_blood", "神速力", ""),
                     new CIBookString("god_blood_speed", "神速力", CIUsefulBookText.speed),
@@ -119,6 +165,13 @@ public class CIModifyBookEvent {
 
         public static ModConfigSpec.DoubleValue ring_fortune;
 
+        public static ModConfigSpec.DoubleValue armor_stone_resistance;
+        public static ModConfigSpec.DoubleValue life_stone_heal;
+
+        public static ModConfigSpec.DoubleValue imitation_biomass_heal;
+        public static ModConfigSpec.DoubleValue imitation_biomass_resistance;
+        public static ModConfigSpec.DoubleValue imitation_biomass_damage;
+
     }
     public static class CIUsefulBookText extends LanguageProvider{
        public static String eat = "进食速度";
@@ -130,7 +183,8 @@ public class CIModifyBookEvent {
        public static String looting = "抢夺";
        public static String future = "时运";
        public static String attackSpeed = "攻击速度";
-       public static String damage = "近战伤害";
+        public static String damage = "近战伤害";
+        public static String resistance = "抗性";
 
         public CIUsefulBookText(PackOutput output) {
             super(output, CIUsefulBook.MODID, "chest_useful_book_test_lang");
@@ -166,6 +220,19 @@ public class CIModifyBookEvent {
             {
                 addCI("ring_fortune", BookTool.addNumberString(true, false,
                         future));
+            }
+            {
+                addCI("armor_stone_resistance", BookTool.addNumberString(true, true,
+                        resistance));
+            }
+            {
+                addCI("life_stone_heal", BookTool.addNumberString(true, true,
+                        heal));
+            }
+            {
+                addCI("imitation_biomass_heal", BookTool.addNumberString(true, true, heal));
+                addCI("imitation_biomass_resistance", BookTool.addNumberString(true, true, resistance));
+                addCI("imitation_biomass_damage", BookTool.addNumberString(true, true, damage));
             }
         }
         public void addCI(String string ,String path){
